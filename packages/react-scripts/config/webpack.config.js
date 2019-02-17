@@ -389,7 +389,7 @@ module.exports = function (webpackEnv) {
             // smaller than specified limit in bytes as data URLs to avoid requests.
             // A missing `test` is equivalent to a match.
             {
-              test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+              test: [/\.jpe?g$/, /\.png$/],
               loader: require.resolve('url-loader'),
               options: {
                 limit: imageInlineSizeLimit,
@@ -399,6 +399,19 @@ module.exports = function (webpackEnv) {
                   options: {
                     adapter: require('responsive-loader/sharp'),
                     name: 'static/media/[name]-[width].[hash:8].[ext]',
+                  }
+                }
+              }
+            },
+            {
+              test: [/\.bmp$/, /\.gif$/, /\.svg$/],
+              loader: require.resolve('url-loader'),
+              options: {
+                limit: 10000,
+                fallback: {
+                  loader: 'file-loader',
+                  options: {
+                    name: 'static/media/[name].[hash:8].[ext]',
                   }
                 }
               }
