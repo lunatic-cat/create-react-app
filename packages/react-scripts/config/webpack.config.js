@@ -338,7 +338,14 @@ module.exports = function(webpackEnv) {
               options: {
                 limit: 10000,
                 name: 'static/media/[name].[hash:8].[ext]',
-              },
+                fallback: {
+                  loader: 'responsive-loader',
+                  options: {
+                    adapter: require('responsive-loader/sharp'),
+                    name: 'static/media/[name]-[width].[hash:8].[ext]',
+                  }
+                }
+              }
             },
             // Process application JS with Babel.
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
